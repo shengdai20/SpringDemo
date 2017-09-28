@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd" 
+        default-autowire = "constructor">
+        <!-- 当用constructor自动装配的时候，其与bean的id也没有直接联系 -->
+        <!-- default-autowire = "byType"> -->
+        <!-- default-autowire = "byName"> -->
+   
+	   <bean id = "autoWiringService" class = "com.imooc.autowiring.AutoWiringService">
+	   <!-- 若有自动装配，也即配置了default-autowire=byName之后，则不需要下面的property，而其流程与原始配置property流程是一样的，利用service去调用dao -->
+	   	<!-- <property name="autoWiringDao" ref = "autoWiringDao"></property>-->
+	   </bean>
+	   
+	   <!-- byType与bean的id没有直接关系，也即即使bean没有id也可以正确装配；而byName与bean的id有直接关系，如果bean没有id或bean的id与service里面的set方法的参数名不一致，则不会执行任何操作，因为bean的id找不到它对应的set方法 -->
+	   <bean id = "autoWiringDao" class = "com.imooc.autowiring.AutoWiringDao"></bean>
+ </beans>

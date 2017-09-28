@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd" 
+        default-init-method = "init" default-destroy-method = "destroy">
+        
+
+		<!-- scope若配置为singleton，则说明bean的范围是单例的，则只会生成一个对象，在测试类中可以用hashcode来查看是否是一个对象 -->
+	<!-- <bean id = "beanScope" class = "com.imooc.bean.BeanScope" scope = "singleton"></bean>-->
+	
+	<bean id = "beanScope" class = "com.imooc.bean.BeanScope" scope = "prototype"></bean>
+		
+ </beans>

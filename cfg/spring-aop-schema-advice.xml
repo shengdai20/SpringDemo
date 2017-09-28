@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop = "http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+       
+       <!-- 切面类 -->
+       <bean id = "moocAspect" class = "com.imooc.aop.schema.advice.MoocAspect"></bean>
+       <!-- 业务类 -->
+       <bean id = "aspectBiz" class = "com.imooc.aop.schema.advice.biz.AspectBiz"></bean>
+       
+       
+       <aop:config>
+       <!-- 这里的ref来自上面的id名，表示将moocAspect作为一个切面来声明，id是moocAspectAOP -->
+			<aop:aspect id = "moocAspectAOP" ref = "moocAspect">
+			<!-- 切入点表达式expression声明为执行com.imooc.aop.schema.advice.biz这个包里的名字以Biz结尾的类的所有方法 -->
+				<!-- <aop:pointcut expression="execution(* com.imooc.aop.schema.advice.biz.*Biz.*(..))" id="moocPointcut"/>
+				这里的method也就是moocAspect所连接的类里面的方法，这个方法会在所有以Biz结尾的类的所有方法执行之前执行
+				<aop:before method="before" pointcut-ref = "moocPointcut"/>
+				方法正常返回后会调用这里的afterReturning
+				<aop:after-returning method="afterReturning" pointcut-ref = "moocPointcut"/>
+				异常抛出后会调用这里的afterThrowing
+				<aop:after-throwing method = "afterThrowing" pointcut-ref = "moocPointcut"/>
+				无论方法是否正常返回，也就是是否正常结束，这里的after方法都会被执行
+				<aop:after method="after" pointcut-ref = "moocPointcut"/>
+				<aop:around method = "around" pointcut-ref = "moocPointcut"/>
+				这里的args需和AspectBiz.init方法中的参数名称一样，
+				<aop:around method = "aroundInit" pointcut = "execution(* com.imooc.aop.schema.advice.biz.AspectBiz.init(String, int))
+							and args(bizName, times)"/> -->
+				<!-- types-matching会匹配到aspectBiz这个bean，接下来会为它指定一个新的父类Fit -->
+				<aop:declare-parents types-matching="com.imooc.aop.schema.advice.biz.*(+)" 
+						implement-interface="com.imooc.aop.schema.advice.Fit"
+						default-impl = "com.imooc.aop.schema.advice.FitImpl"/>
+			</aop:aspect>
+       </aop:config>
+       
+ </beans>
